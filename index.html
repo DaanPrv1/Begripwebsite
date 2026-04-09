@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Begrippenlijst Rentmeesterij & Recht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0;--surface:#fff;--surface2:#f2efe8;--border:#e0dbd0;--border-light:#ede9e0;
+  --text:#1a1814;--text-muted:#6b6558;--text-faint:#a09888;
+  --green:#2d5a27;--green-light:#eef4ed;--green-mid:#4a8a42;
+  --gold:#b08a3e;--gold-light:#f7f0e2;
+  --blue:#1a4a8a;--blue-light:#e8f0fb;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:16px;line-height:1.6}
+
+/* HEADER */
+header{background:var(--green);padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.04)}
+header::after{content:'';position:absolute;bottom:-50px;left:30%;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.03)}
+.hdr-inner{max-width:960px;margin:0 auto;position:relative;z-index:1}
+.hdr-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4.5vw,42px);font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px}
+header h1 span{color:rgba(255,255,255,0.55);font-weight:400}
+.hdr-sub{font-size:13px;color:rgba(255,255,255,0.6);font-weight:300;max-width:500px}
+.hdr-stats{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,0.1);border-radius:10px;padding:9px 16px;text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;line-height:1}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px}
+
+/* TABS */
+.tab-bar{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.06)}
+.tab-bar-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:0;padding:0 2rem}
+.tab-btn{padding:14px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.on{color:var(--green);border-bottom-color:var(--green)}
+
+/* CONTROLS */
+.controls{background:var(--surface);border-bottom:1px solid var(--border-light);padding:12px 2rem}
+.controls-inner{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.search-row{display:flex;gap:8px;align-items:center}
+.search-wrap{flex:1;position:relative}
+.si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-faint);font-size:13px;pointer-events:none}
+input[type=text]{width:100%;height:38px;padding:0 12px 0 34px;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;background:var(--bg);color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+input[type=text]:focus{border-color:var(--green-mid);box-shadow:0 0 0 3px rgba(45,90,39,.1)}
+input[type=text]::placeholder{color:var(--text-faint)}
+.cnt-badge{background:var(--green-light);color:var(--green);font-family:'DM Mono',monospace;font-size:12px;padding:4px 12px;border-radius:20px;white-space:nowrap}
+.cats{display:flex;gap:5px;flex-wrap:wrap}
+.cat-btn{padding:4px 12px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:20px;background:none;cursor:pointer;color:var(--text-muted);transition:all .15s}
+.cat-btn:hover{background:var(--bg);border-color:var(--text-faint);color:var(--text)}
+.cat-btn.on{background:var(--text);border-color:var(--text);color:#fff}
+
+/* MAIN */
+main{max-width:960px;margin:0 auto;padding:28px 2rem 80px}
+.panel{display:none}
+.panel.on{display:block}
+.section-intro{background:var(--surface);border:1px solid var(--border-light);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
+.si-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--text);margin-bottom:6px}
+.si-body{font-size:13px;color:var(--text-muted);line-height:1.65}
+
+/* ITEMS */
+.list{display:flex;flex-direction:column;gap:7px}
+.item{background:var(--surface);border:1px solid var(--border-light);border-radius:12px;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.item:hover{border-color:var(--border);box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+.item-hdr{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;user-select:none;transition:background .15s}
+.item-hdr:hover{background:var(--bg)}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.item-main{flex:1;min-width:0;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.term{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--text);line-height:1.3}
+.art{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-faint);background:var(--surface2);padding:2px 6px;border-radius:4px}
+.chev{color:var(--text-faint);font-size:10px;flex-shrink:0;transition:transform .22s}
+.item.open .chev{transform:rotate(180deg)}
+.item-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border-light);animation:fadeIn .18s ease}
+.item.open .item-body{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.def{font-size:13px;color:var(--text);line-height:1.75;padding:13px 0 10px;border-bottom:1px solid var(--border-light);margin-bottom:11px}
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+@media(max-width:580px){.info-row{grid-template-columns:1fr}}
+.info-box{border-radius:8px;padding:9px 12px}
+.ib-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.ib-txt{font-size:12px;line-height:1.6}
+.tip-box{background:var(--gold-light)}
+.tip-box .ib-lbl{color:var(--gold)}
+.tip-box .ib-txt{color:#5a4010}
+.ex-box{background:var(--green-light)}
+.ex-box .ib-lbl{color:var(--green-mid)}
+.ex-box .ib-txt{color:#1a4018;font-style:italic}
+.cat-tag{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-top:6px}
+.no-results{text-align:center;padding:56px 20px;color:var(--text-faint)}
+.no-results-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--text-muted);margin-bottom:6px}
+
+/* KENNISKAARTEN (tab 2) */
+.k-section{margin-bottom:2rem}
+.k-section-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:500;color:var(--text);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1.5px solid var(--border)}
+.k-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:.5rem}
+.k-card{background:var(--surface);border:1px solid var(--border-light);border-radius:12px;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.k-card:hover{border-color:var(--border);box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+.k-card-hdr{display:flex;align-items:center;gap:8px;padding:12px 14px;cursor:pointer;user-select:none;transition:background .15s}
+.k-card-hdr:hover{background:var(--bg)}
+.k-card-title{font-size:13px;font-weight:500;color:var(--text);flex:1;line-height:1.4}
+.k-card-sub{font-size:11px;color:var(--text-faint);font-family:'DM Mono',monospace}
+.k-card-chev{color:var(--text-faint);font-size:10px;flex-shrink:0;transition:transform .2s}
+.k-card.open .k-card-chev{transform:rotate(180deg)}
+.k-card-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border-light);animation:fadeIn .18s ease}
+.k-card.open .k-card-body{display:block}
+.k-items{padding-top:10px;display:flex;flex-direction:column;gap:7px}
+.k-item{font-size:12px;color:var(--text);line-height:1.6;display:flex;gap:7px;align-items:flex-start}
+.k-bullet{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.k-def{font-size:12px;color:var(--text-muted);line-height:1.5;padding-top:8px;border-top:1px solid var(--border-light);margin-top:8px;font-style:italic}
+
+/* SEARCH for tab 2 */
+.k-search-wrap{margin-bottom:1.25rem;display:flex;gap:8px;align-items:center}
+.k-cnt{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);background:var(--surface2);padding:4px 12px;border-radius:20px;white-space:nowrap}
+
+/* SCROLL TOP */
+#totop{position:fixed;bottom:24px;right:22px;width:38px;height:38px;border-radius:50%;background:var(--green);color:#fff;border:none;cursor:pointer;font-size:15px;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(45,90,39,.3);transition:opacity .2s,transform .2s;z-index:300}
+#totop:hover{transform:translateY(-2px)}
+#totop.vis{display:flex}
+
+footer{text-align:center;padding:20px;font-size:12px;color:var(--text-faint);border-top:1px solid var(--border-light)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-inner">
+    <div class="hdr-label">Rentmeesterij 2025–2026</div>
+    <h1>Begrippenlijst<br><span>Recht voor Rentmeesterij</span></h1>
+    <p class="hdr-sub">Alle kernbegrippen uit het basisboek én de overige collegestof — met definitie, geheugensteun en praktijkvoorbeeld.</p>
+    <div class="hdr-stats">
+      <div class="stat"><div class="stat-num">70</div><div class="stat-lbl">privaatrecht begrippen</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-lbl">categorieën</div></div>
+      <div class="stat"><div class="stat-num">60+</div><div class="stat-lbl">kenniskaarten colleges</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn on" onclick="switchTab('begrippen',this)">Begrippen H1–H5</button>
+    <button class="tab-btn" onclick="switchTab('kennis',this)">Overige kennis colleges</button>
+  </div>
+</div>
+
+<!-- TAB 1 CONTROLS -->
+<div id="ctrl-begrippen" class="controls">
+  <div class="controls-inner">
+    <div class="search-row">
+      <div class="search-wrap">
+        <span class="si">⌕</span>
+        <input type="text" id="sq1" placeholder="Zoek een begrip of definitie..." oninput="buildBegrippen()">
+      </div>
+      <span class="cnt-badge" id="cnt1">70 begrippen</span>
+    </div>
+    <div class="cats" id="catbar1"></div>
+  </div>
+</div>
+
+<!-- TAB 2 CONTROLS -->
+<div id="ctrl-kennis" class="controls" style="display:none">
+  <div class="controls-inner">
+    <div class="search-row">
+      <div class="search-wrap">
+        <span class="si">⌕</span>
+        <input type="text" id="sq2" placeholder="Zoek in collegestof..." oninput="buildKennis()">
+      </div>
+      <span class="cnt-badge" id="cnt2">60+ kenniskaarten</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- TAB 1: BEGRIPPEN -->
+  <div id="panel-begrippen" class="panel on">
+    <div class="list" id="lst1"></div>
+  </div>
+
+  <!-- TAB 2: KENNIS -->
+  <div id="panel-kennis" class="panel">
+    <div id="klst"></div>
+  </div>
+</main>
+
+<footer>Begrippenlijst Recht voor Rentmeesterij · 2025–2026 · Hogeschool Larenstein</footer>
+<button id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── TAB SWITCH ──
+function switchTab(id, el) {
+  ['begrippen','kennis'].forEach(t => {
+    document.getElementById('panel-'+t).classList.toggle('on', t===id);
+    document.getElementById('ctrl-'+t).style.display = t===id ? '' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// ══════════════════════════════════════════════════════
+// TAB 1 — BEGRIPPEN
+// ══════════════════════════════════════════════════════
+const CC1 = {
+  "Rechtshandeling":{"col":"#2b5fa8","bg":"#edf2fb","text":"#1a3d6e"},
+  "Goederenrecht":{"col":"#1d7a5a","bg":"#ebf6f1","text":"#124d39"},
+  "Aansprakelijkheid":{"col":"#c04a1a","bg":"#fdf0ea","text":"#7a2e0e"},
+  "Overeenkomst":{"col":"#5a3a9e","bg":"#f2edfb","text":"#3a2466"},
+  "Eigendom & zakelijk":{"col":"#9a6e10","bg":"#faf4e4","text":"#5c4108"},
+  "Personen":{"col":"#a0295a","bg":"#fbedf3","text":"#661a3a"},
+  "Formeel":{"col":"#3a5a6a","bg":"#edf4f7","text":"#233845"},
+  "Overig":{"col":"#5a5248","bg":"#f2f0ec","text":"#3a3530"}
+};
+
+const TERMS = [
+  {t:"Aansprakelijk",c:"Aansprakelijkheid",a:"",d:"Juridisch (in rechte) verantwoordelijk voor schade of een verbintenis.",tip:"Als iemand aansprakelijk is, kan hij door de rechter worden verplicht schade te vergoeden.",ex:"De eigenaar van een hond die iemand bijt is aansprakelijk voor de schade (art. 6:179 BW)."},
+  {t:"Aanvullend recht",c:"Overig",a:"",d:"Rechtsregels die gelden tenzij partijen iets anders zijn overeengekomen. Ook: regelend recht.",tip:"Tegenhanger van dwingend recht. Partijen mogen van aanvullend recht afwijken in hun overeenkomst.",ex:"De risicoovergang bij levering is aanvullend recht — partijen mogen dit anders afspreken."},
+  {t:"Aard- en nagelvast",c:"Goederenrecht",a:"5:3 BW",d:"Zodanige verbondenheid van een zaak met een hoofdzaak dat zij niet kan worden afgescheiden zonder beschadiging van betekenis.",tip:"Bestanddeel door hechte fysieke verbinding. Wordt eigendom van de eigenaar van de hoofdzaak door natrekking.",ex:"Een ingebouwde keuken die niet zonder schade loskomt is aard- en nagelvast — bestanddeel van het huis."},
+  {t:"Absoluut recht",c:"Eigendom & zakelijk",a:"3:1 BW",d:"Recht dat tegenover eenieder geldend gemaakt kan worden — werkt jegens de hele wereld.",tip:"Tegenstelling: persoonlijk recht (werkt alleen tussen contractspartijen). Eigendom en erfpacht zijn absolute rechten.",ex:"Eigendomsrecht werkt tegen iedereen: je kunt het inroepen tegenover elke derde die je zaak houdt."},
+  {t:"Affectieschade",c:"Aansprakelijkheid",a:"6:108 BW",d:"Immateriële schade (verdriet) geleden door naasten wegens het gewond raken of overlijden van een dierbaar persoon.",tip:"Erkend in NL recht: naasten van ernstig gewond of overleden slachtoffer kunnen een vaste vergoeding claimen.",ex:"De ouders van een kind dat door een ongeluk overlijdt kunnen affectieschade vorderen."},
+  {t:"Algemeen verbindend voorschrift",c:"Formeel",a:"",d:"Wet in materiële zin: een algemeen burgers bindende regeling voor herhaalde toepassing, ongeacht de bron. Afkorting: AVV.",tip:"Bindt iedereen, geldt voor onbepaalde tijd en voor een onbepaalde groep.",ex:"Een gemeentelijke APV is een AVV: geldt voor iedereen in de gemeente."},
+  {t:"Algemene maatregel van bestuur",c:"Formeel",a:"89 Gw",d:"Algemeen verbindend voorschrift vastgesteld door de regering bij Koninklijk Besluit. Afkorting: AMvB.",tip:"Lagere rang dan wet in formele zin, hogere rang dan ministeriële regeling. Geen instemming Staten-Generaal nodig.",ex:"Het Pachtprijzenbesluit 2007 is een AMvB die de maximale pachtprijzen regelt."},
+  {t:"Artikel",c:"Formeel",a:"",d:"Een genummerd onderdeel van een wet, verdrag of contract.",tip:"Artikelen zijn opgedeeld in leden (lid 1, 2…) en soms sub-onderdelen (a, b…). Altijd met de wet erbij citeren.",ex:"Art. 6:162 BW regelt de onrechtmatige daad."},
+  {t:"Authentieke akte",c:"Formeel",a:"",d:"Geschrift opgesteld door een openbaar ambtenaar (notaris) met verplichte bewijskracht.",tip:"Vereist bij levering onroerend goed. Verschil met onderhandse akte: dwingend bewijskracht.",ex:"De notariële transportakte is een authentieke akte — verplicht bij overdracht van een huis."},
+  {t:"Beperkt recht",c:"Eigendom & zakelijk",a:"3:8 BW",d:"Absoluut recht afgeleid uit een meer omvattend recht (eigendom), waarmee dat recht is bezwaard.",tip:"Eigendom is het meest omvattend. Alle andere zakelijke rechten (erfpacht, hypotheek) zijn beperkte rechten.",ex:"Erfpacht is een beperkt recht: de erfpachter heeft minder rechten dan de eigenaar."},
+  {t:"Beschikkingsbevoegdheid",c:"Goederenrecht",a:"3:84 BW",d:"De bevoegdheid om een goed over te dragen of met een beperkt recht te bezwaren. Vereiste voor geldige overdracht.",tip:"Normaal is de eigenaar beschikkingsbevoegd. Een failliet persoon of minderjarige kan onbevoegd zijn.",ex:"Wie een gestolen fiets verkoopt is beschikkingsonbevoegd — de koper verkrijgt in principe geen eigendom."},
+  {t:"Bestanddeel",c:"Goederenrecht",a:"3:4 BW",d:"Hetgeen volgens verkeersopvatting deel uitmaakt van een zaak of daarmee een zeer hechte fysieke verbinding vormt.",tip:"Cruciaal voor rentmeesters: gebouwen op andermans grond zijn bestanddelen van de grond (natrekking).",ex:"Een muurschildering is bestanddeel van het huis. Een losse staande lamp niet."},
+  {t:"Bezitter",c:"Goederenrecht",a:"3:107 BW",d:"Degene die een goed houdt voor zichzelf — alsof hij eigenaar is.",tip:"Onderscheid: bezitter (voor zichzelf) vs. houder (voor een ander). Langdurig bezit kan leiden tot eigendomsverkrijging door verjaring.",ex:"Wie jarenlang een perceel gebruikt alsof het zijn eigendom is, is bezitter."},
+  {t:"Burgerlijk recht",c:"Overig",a:"",d:"Synoniem voor privaatrecht. Regels over rechten en plichten van gelijkwaardige rechtssubjecten.",tip:"Het Burgerlijk Wetboek (BW) is de codificatie van het Nederlandse privaatrecht in 10 boeken.",ex:"Koop, huur, pacht en onrechtmatige daad zijn onderwerpen van burgerlijk recht."},
+  {t:"Causaal verband",c:"Aansprakelijkheid",a:"6:162 BW",d:"Het verband tussen oorzaak (onrechtmatige gedraging) en gevolg (schade). Vereiste voor aansprakelijkheid.",tip:"Test: conditio sine qua non — zou de schade ook zijn opgetreden zonder de gedraging? Zo nee: causaal verband.",ex:"Arts maakt fout en patiënt overlijdt daardoor: causaal verband aanwezig."},
+  {t:"Codificatie",c:"Formeel",a:"",d:"Het samenstellen van systematisch ingerichte wetboeken die een rechtsgebied volledig regelen.",tip:"Nederland: civil law systeem met gecodificeerde wetboeken. Tegenstelling: common law (jurisprudentie-gestuurd).",ex:"Het Burgerlijk Wetboek is een codificatie van het privaatrecht in 10 boeken."},
+  {t:"Conditio sine qua non",c:"Aansprakelijkheid",a:"6:162 BW",d:"Voorwaarde zonder welke de schade niet zou zijn ingetreden. Standaardtest voor causaal verband.",tip:"'Maar voor' test: zou de schade er zijn geweest zonder de gedraging? Zo nee: causaal verband aanwezig.",ex:"'Maar voor' de automobilist die door rood reed, was de fietser niet aangereden."},
+  {t:"Cumulatieve vereisten",c:"Overig",a:"",d:"Aan álle vereisten moet tegelijk zijn voldaan. Eén ontbrekend vereiste betekent: geen rechtsgevolg.",tip:"Essentieel bij onrechtmatige daad (5 vereisten), overdracht (3 vereisten). Altijd alle langs.",ex:"OD: ontbreekt de relativiteit? Geen aansprakelijkheid — ook al zijn de andere vier vervuld."},
+  {t:"Derdenbescherming",c:"Goederenrecht",a:"3:86 BW",d:"Bescherming van een derde te goeder trouw die een goed verkrijgt van een beschikkingsonbevoegde.",tip:"Uitzondering op 'nemo plus': wie te goeder trouw een roerend goed koopt van een onbevoegde, kan toch eigenaar worden.",ex:"Jan koopt fiets van dief. Als Jan te goeder trouw was, wordt hij eigenaar ondanks de diefstal."},
+  {t:"Droit de suite",c:"Eigendom & zakelijk",a:"",d:"Het beperkte recht volgt het goed waarop het rust, ongeacht in wiens handen het goed zich bevindt.",tip:"Kenmerk van zakelijke rechten. Hypotheek blijft op huis rusten ook na verkoop aan nieuwe eigenaar.",ex:"Erfpacht volgt de grond bij eigendomsoverdracht — de nieuwe eigenaar is gebonden aan het erfpachtrecht."},
+  {t:"Dwingend recht",c:"Overig",a:"",d:"Rechtsregels waarvan partijen niet mogen afwijken, op straffe van nietigheid.",tip:"Beschermt zwakkere partijen: huurder, werknemer, pachter. Tegenstelling: aanvullend recht (afwijking toegestaan).",ex:"Het continuatierecht bij reguliere pacht is dwingend: de verpachter mag het niet contractueel uitsluiten."},
+  {t:"Eigen schuld",c:"Aansprakelijkheid",a:"6:101 BW",d:"De schade is mede veroorzaakt door de benadeelde zelf. Kan leiden tot vermindering schadevergoeding.",tip:"Bij eigen schuld wordt schade verdeeld naar mate van veroorzaking.",ex:"Fietser zonder helm raakt gewond: eigen schuld kan zijn vergoeding voor hoofdletsel verminderen."},
+  {t:"Eigendom",c:"Eigendom & zakelijk",a:"5:1 BW",d:"Het meest omvattende recht dat een persoon op een zaak kan hebben.",tip:"Geeft recht op gebruik, vruchttrekking en beschikking. Niet absoluut: publiekrechtelijke beperkingen zijn mogelijk.",ex:"De eigenaar van een perceel mag het bebouwen — maar niet in strijd met het bestemmingsplan."},
+  {t:"Eigendomsvoorbehoud",c:"Eigendom & zakelijk",a:"3:92 BW",d:"De verkoper blijft eigenaar van de geleverde zaak totdat de koopprijs volledig is voldaan.",tip:"Beschermt de verkoper: bij faillissement koper vóór betaling kan de verkoper zijn zaak terugvorderen.",ex:"Machine geleverd met eigendomsvoorbehoud. Koper betaalt niet. Verkoper haalt machine terug — hij is nog eigenaar."},
+  {t:"Eigenrichting",c:"Overig",a:"",d:"Zichzelf eigenmachtig recht verschaffen zonder tussenkomst van de overheid.",tip:"Verboden in de rechtsstaat. Geschillen worden beslecht via de rechter, niet op eigen houtje.",ex:"Buurman sloopt eigenhandig de schutting van zijn buurman: eigenrichting."},
+  {t:"Erfdienstbaarheid",c:"Eigendom & zakelijk",a:"5:70 BW",d:"Beperkt zakelijk recht: last op een onroerende zaak (dienend erf) ten behoeve van een andere onroerende zaak (heersend erf).",tip:"Loopt met het land mee — gebonden aan de zaak, niet de persoon. Gaat automatisch over bij eigendomsoverdracht.",ex:"Recht van overpad: buurman moet dulden dat je over zijn erf loopt."},
+  {t:"Erfpacht",c:"Eigendom & zakelijk",a:"5:85 BW",d:"Beperkt zakelijk recht dat de erfpachter de bevoegdheid geeft een onroerende zaak van een ander te houden en te gebruiken. Tegenprestatie: canon.",tip:"Zakelijk recht → verkoopbaar en vererfbaar. Groot verschil met huur (persoonlijk recht). Speelt groot in grondbeleid.",ex:"Gemeente geeft grond in erfpacht: woningeigenaar betaalt jaarlijks canon maar is geen eigenaar van de grond."},
+  {t:"Feitelijke handeling",c:"Rechtshandeling",a:"",d:"Menselijke handeling waarbij het rechtsgevolg intreedt zonder dat de wil van de handelende persoon daarop gericht is.",tip:"Tegenstelling: rechtshandeling (gewild rechtsgevolg). Bij feitelijke handeling treedt het gevolg in door de wet.",ex:"Automobilist rijdt iemand aan: geen gewilde schade, wel rechtsgevolg (aansprakelijkheid)."},
+  {t:"Formeel recht",c:"Formeel",a:"",d:"Regels over de wijze waarop het materieel recht kan worden afgedwongen. Ook: procesrecht.",tip:"Tegenstelling: materieel recht (de rechten en plichten zelf). Wetboek van Burgerlijke Rechtsvordering (Rv) is formeel recht.",ex:"Hoe je een rechtszaak aanspant, welke termijnen gelden — dat is formeel recht."},
+  {t:"Gelaagde structuur",c:"Formeel",a:"",d:"Opbouwprincipe BW: algemene bepalingen eerst, dan steeds specifieker. Bijzondere bepaling gaat voor algemene.",tip:"Lex specialis: hoe specifieker de regeling, hoe meer die prevaleert. Zoek altijd de meest specifieke bepaling.",ex:"Pachtregels (titel 7.5 BW) zijn specifieker dan algemene huurregels en gaan daarvoor."},
+  {t:"Gevolgschade",c:"Aansprakelijkheid",a:"6:96 BW",d:"Schade die de crediteur lijdt in zijn overige vermogen als gevolg van een ondeugdelijke prestatie.",tip:"Naast directe schade (waarde gebrekkige prestatie) ook de gevolgen ervan. Beide kunnen worden gevorderd.",ex:"Verontreinigde mest → oogst mislukt. Oogstderving is gevolgschade naast kosten vervangende mest."},
+  {t:"Gewoonte",c:"Formeel",a:"",d:"Gedragslijn die gedurende langere tijd binnen een vaste kring als juist wordt beschouwd. Is een rechtsbron.",tip:"Gewoonterecht vult de wet aan. In handelsrecht spelen handelsgebruiken een belangrijke rol.",ex:"Het gebruik om een factuur binnen 30 dagen te betalen kan als gewoonte gelden."},
+  {t:"Goed",c:"Goederenrecht",a:"3:1 BW",d:"Zowel zaken als vermogensrechten. Alle zaken zijn goederen, maar niet alle goederen zijn zaken.",tip:"Zaken = stoffelijk (fiets, perceel). Vermogensrechten = niet-stoffelijk maar op geld waardeerbaar (vordering, aandeel).",ex:"Bankrekening (vorderingsrecht) is goed maar geen zaak. Huis is zowel goed als zaak."},
+  {t:"Goede trouw",c:"Goederenrecht",a:"3:11 BW",d:"Het niet weten of bij normaal onderzoek niet behoren te weten van een bepaalde omstandigheid.",tip:"Vereiste voor derdenbescherming (3:86). Bij twijfel geldt een onderzoeksplicht.",ex:"Koper van een tweedehands auto die niet controleert of hij gestolen is, is mogelijk niet te goeder trouw."},
+  {t:"Goederenrechtelijke overeenkomst",c:"Goederenrecht",a:"3:84 BW",d:"Wilsovereenstemming om een goed uit het vermogen van de vervreemder in dat van de verkrijger te laten overgaan.",tip:"Onderscheid: obligatoire overeenkomst (verplichting tot levering) vs. goederenrechtelijke overeenkomst (de levering zelf).",ex:"Koopovereenkomst = obligatoir. Notariële transportakte + Kadaster = goederenrechtelijke overeenkomst."},
+  {t:"Handelingsbekwaamheid",c:"Personen",a:"3:32 BW",d:"De bevoegdheid om zelfstandig onaantastbare rechtshandelingen te verrichten.",tip:"Iedereen is bekwaam tenzij de wet anders bepaalt. Minderjarigen zijn handelingsonbekwaam: hun handelingen zijn vernietigbaar.",ex:"Een 16-jarige sluit een koopovereenkomst: vernietigbaar tenzij ouders toestemden."},
+  {t:"Hoofdelijke aansprakelijkheid",c:"Aansprakelijkheid",a:"6:102 BW",d:"Aansprakelijkheid van twee of meer personen waarbij de benadeelde elk van hen kan aanspreken voor het gehele schadebedrag.",tip:"De benadeelde hoeft niet te kiezen: hij spreekt de rijkste aan voor alles. Intern verhaalsrecht (regres) bestaat tussen de aansprakelijken.",ex:"Twee bestuurders plegen samen onrechtmatige daad: slachtoffer kan de rijkste aanspreken voor alles."},
+  {t:"Houder",c:"Goederenrecht",a:"3:107 BW",d:"Degene die een goed houdt voor een ander (niet voor zichzelf).",tip:"Huurder, bewaarder zijn houders. Houder erkent andermans recht. Verschil bezitter: bezitter houdt voor zichzelf.",ex:"Huurder houdt de woning voor de verhuurder. Hij is houder, geen bezitter."},
+  {t:"Hypotheek",c:"Eigendom & zakelijk",a:"3:227 BW",d:"Beperkt zekerheidsrecht op registergoederen, gevestigd ten gunste van een schuldeiser.",tip:"Hypotheek op onroerend goed; pand op roerende zaken. Bij wanbetaling kan de bank het huis executoriaal laten verkopen.",ex:"Je neemt hypotheek voor je huis: bank heeft hypotheekrecht. Betaal je niet, verkoopt de bank het huis."},
+  {t:"Hypotheekgever",c:"Personen",a:"",d:"Degene die een recht van hypotheek vestigt op zijn registergoed als zekerheid voor een schuld. Dat is de schuldenaar.",tip:"Niet verwarren met hypotheekhouder (de bank). Hypotheekgever = de woningeigenaar die leent.",ex:"Jij bent hypotheekgever als je jouw huis als zekerheid stelt voor een lening bij de bank."},
+  {t:"Hypotheekhouder",c:"Personen",a:"",d:"De schuldeiser (bijv. bank) die als zekerheid een hypotheekrecht heeft verkregen op het registergoed van de schuldenaar.",tip:"Hypotheekhouder kan bij wanbetaling het goed executoriaal verkopen. Preferente positie bij faillissement.",ex:"De bank is hypotheekhouder: zij kan jouw huis verkopen als je de lening niet terugbetaalt."},
+  {t:"Ingebrekestelling",c:"Overeenkomst",a:"6:82 BW",d:"Schriftelijke verklaring van de schuldeiser waarbij de schuldenaar een laatste termijn wordt gegund om na te komen.",tip:"Vereist voor verzuim (en daarmee voor schadevergoeding). Uitzondering: fatale termijn — dan geen ingebrekestelling nodig.",ex:"'Betaal binnen 14 dagen, anders bent u in verzuim.' Dit is een ingebrekestelling."},
+  {t:"Jurisprudentie",c:"Formeel",a:"",d:"Verzamelnaam voor uitspraken van rechtsprekende instanties. Rechtsbron naast wet en gewoonte.",tip:"Standaardarresten van de Hoge Raad vormen het recht mee. Ze vullen lacunes in de wet op.",ex:"HR Quint/Te Poel: verbintenissen kunnen ook buiten expliciete wetsartikelen bestaan."},
+  {t:"Kettingbeding",c:"Overeenkomst",a:"",d:"Contractueel beding dat niet-kwalitatieve verplichtingen doorspeelt aan opvolgende eigenaren, op straffe van boete.",tip:"Werkt niet automatisch (zoals kwalitatieve verplichting) maar via contractuele doorgifte. Risico: vergeten door te geven.",ex:"'U bent verplicht dit beding bij verkoop aan uw opvolger op te leggen.' Vergeet u dit: boete."},
+  {t:"Kunstgreep",c:"Overeenkomst",a:"3:44 BW",d:"Middel bij bedrog: onjuiste mededeling, verzwijging van verplicht mede te delen feit, vals voordoen of manipuleren met documenten.",tip:"Vereiste voor bedrog (3:44 lid 3). De kunstgreep moet hebben bewogen tot het sluiten van de overeenkomst.",ex:"Verkoper verzwijgt bewust funderingsproblemen → kunstgreep → bedrog → vernietigbare overeenkomst."},
+  {t:"Kwalitatieve aansprakelijkheid",c:"Aansprakelijkheid",a:"6:169 e.v. BW",d:"Aansprakelijkheid voor onrechtmatige gedragingen van personen of zaken waarvoor men krachtens de wet verantwoordelijk is.",tip:"Aansprakelijkheid om wie je bent, niet om wat je doet. Voorbeelden: ouders voor kinderen, werkgever voor werknemer, bezitter voor dier.",ex:"Werkgever is aansprakelijk voor fout van werknemer tijdens werk."},
+  {t:"Kwalitatieve verplichting",c:"Goederenrecht",a:"6:252 BW",d:"Verplichting om iets te dulden of niet te doen ten aanzien van een registergoed, die automatisch overgaat op opvolgende eigenaren.",tip:"Vereisten: notariële akte + inschrijving openbare registers. Werkt automatisch — verschil met kettingbeding.",ex:"Verplichting om geen bomen hoger dan 6 meter te plaatsen — gaat automatisch over bij verkoop."},
+  {t:"Levering",c:"Goederenrecht",a:"3:84 BW",d:"De handeling(en) vereist om de overdracht van een goed te bewerkstelligen.",tip:"Roerend: bezitsverschaffing. Onroerend: notariële akte + Kadaster. Vordering: akte van cessie + mededeling.",ex:"Sleuteloverdracht auto = levering. Passeren transportakte + Kadaster = levering huis."},
+  {t:"Levering brevi manu",c:"Goederenrecht",a:"3:115 BW",d:"Bezitsverschaffing waarbij de verkrijger, die al houder was, door een tweezijdige verklaring bezitter wordt.",tip:"Snelle levering zonder feitelijke handeling: de zaak staat al bij de koper.",ex:"Huurder koopt het gehuurde: wordt via brevi manu direct bezitter."},
+  {t:"Levering constitutum possessorium",c:"Goederenrecht",a:"3:115 BW",d:"Bezitsverschaffing waarbij de vervreemder (die bezitter was) door verklaring houder voor de verkrijger wordt.",tip:"Zaak blijft feitelijk bij verkoper maar wordt juridisch eigendom van koper.",ex:"Je verkoopt je auto maar leent hem nog een maand terug. Koper wordt direct eigenaar."},
+  {t:"Levering longa manu",c:"Goederenrecht",a:"3:115 BW",d:"Een derde die houder was voor de vervreemder wordt door verklaring houder voor de verkrijger, na erkenning of mededeling.",tip:"Indirecte levering via een derde. Vereist erkenning door of mededeling aan de derde.",ex:"Goederen in een opslagloods. De loods erkent dat hij voortaan voor de koper houdt."},
+  {t:"Materieel recht",c:"Formeel",a:"",d:"Het deel van het recht dat de rechten en verplichtingen regelt — de inhoudelijke regels.",tip:"Tegenstelling: formeel recht (procesrecht). BW is materieel recht. Rv is formeel.",ex:"Art. 6:162 BW (onrechtmatige daad) is materieel recht."},
+  {t:"Meerzijdige rechtshandeling",c:"Rechtshandeling",a:"6:213 BW",d:"Rechtshandeling waarbij de geopenbaarde wilsverklaringen van ten minste twee partijen op rechtsgevolg zijn gericht.",tip:"Een overeenkomst is altijd meerzijdig. Eenzijdig: testament, opzegging.",ex:"Koopovereenkomst: beide partijen willen het rechtsgevolg (overdracht + betaling)."},
+  {t:"Nakoming",c:"Overeenkomst",a:"3:296 BW",d:"Het voldoen aan een verplichting krachtens een verbintenis. Synoniem: presteren, betalen.",tip:"Eerste rechtsmiddel bij tekortkoming. Je kunt via de rechter nakoming vorderen.",ex:"De aannemer moet het huis afbouwen — dat is nakoming."},
+  {t:"Natrekking",c:"Goederenrecht",a:"5:3 BW",d:"Eigendomsverkrijging doordat de eigenaar van de hoofdzaak eigenaar wordt van de bestanddelen van die zaak.",tip:"Cruciaal: gebouwen op andermans grond worden eigendom van de grondeigenaar. Oplossing: opstalrecht vestigen.",ex:"Boer bouwt schuur op gepachte grond zonder opstalrecht → schuur wordt eigendom van grondeigenaar."},
+  {t:"Natuurlijk persoon",c:"Personen",a:"",d:"Een mens als rechtssubject — drager van rechten en plichten van geboorte tot dood.",tip:"Tegenstelling: rechtspersoon (BV, gemeente). Elk mens is automatisch een natuurlijk persoon.",ex:"Jij bent een natuurlijk persoon die een huis kan kopen, aansprakelijk kan zijn."},
+  {t:"Nietigheid",c:"Rechtshandeling",a:"3:40 BW",d:"Het beoogde rechtsgevolg treedt niet in. De rechtshandeling is van rechtswege nooit geldig geweest.",tip:"Werkt automatisch: geen actie vereist. Gronden: strijd openbare orde, goede zeden, dwingende wet.",ex:"Overeenkomst om een moord te plegen is nietig: rechtsgevolg treedt nooit in."},
+  {t:"Onrechtmatige daad",c:"Aansprakelijkheid",a:"6:162 BW",d:"Onrechtmatige gedraging die aan de dader kan worden toegerekend en schade veroorzaakt bij een ander. Vijf vereisten cumulatief.",tip:"Vijf vereisten: onrechtmatige gedraging, toerekenbaarheid, schade, causaal verband, relativiteit (6:163).",ex:"Automobilist rijdt door rood en raakt fietser: voldoet aan alle vijf vereisten."},
+  {t:"Onverschuldigde betaling",c:"Overeenkomst",a:"6:203 BW",d:"Prestatie zonder rechtsgrond — betaling of levering waarvoor geen juridische basis bestaat.",tip:"Leidt tot terugvorderingsrecht: wat zonder rechtsgrond is betaald, kan worden teruggevorderd.",ex:"Je betaalt per ongeluk twee keer een factuur. De tweede betaling is onverschuldigd."},
+  {t:"Opstalrecht",c:"Eigendom & zakelijk",a:"5:101 BW",d:"Beperkt zakelijk recht om in, op of boven een onroerende zaak van een ander gebouwen, werken of beplanting in eigendom te hebben.",tip:"Voorkomt natrekking. Opstaller behoudt eigendom van zijn gebouw ondanks dat hij geen grondeigenaar is.",ex:"Via opstalrecht blijft de schuur die de erfpachter bouwt zijn eigendom."},
+  {t:"Overeenkomst",c:"Overeenkomst",a:"6:213 BW",d:"Meerzijdige rechtshandeling waarbij een of meer partijen jegens een of meer andere een verbintenis aangaan.",tip:"Totstandkoming: aanbod + aanvaarding (6:217). Partijen zijn gebonden + aanvullende werking R&B.",ex:"Koopovereenkomst, huurovereenkomst, pachtovereenkomst zijn alle overeenkomsten."},
+  {t:"Overdracht",c:"Goederenrecht",a:"3:84 BW",d:"Het overgaan van een goed van de ene rechthebbende naar de andere. Vereist: geldige titel, levering, beschikkingsbevoegdheid.",tip:"Overdracht ≠ verkoop. Verkoop is de titel. Overdracht is het goederenrechtelijke gevolg.",ex:"Verkoop = titel. Notariële akte + Kadaster = levering = overdracht."},
+  {t:"Overmacht",c:"Overeenkomst",a:"6:75 BW",d:"Niet-toerekenbare tekortkoming: de schuldenaar kan de tekortkoming niet worden toegerekend.",tip:"Geen schadevergoeding bij overmacht, wél ontbinding mogelijk. Tegenstelling: wanprestatie (toerekenbaar).",ex:"Storm vernietigt bloementeelt. Levering mislukt door overmacht: geen schadevergoedingsplicht."},
+  {t:"Pand",c:"Eigendom & zakelijk",a:"3:227 BW",d:"Beperkt zekerheidsrecht op niet-registergoederen (roerende zaken, vorderingen).",tip:"Pand op roerend goed; hypotheek op onroerend goed. Bij wanbetaling kan de pandhouder het goed verkopen.",ex:"Juwelen in een pandjeswinkel: juwelier heeft pandrecht. Betaal je niet, verkoopt hij de juwelen."},
+  {t:"Persoonlijk recht",c:"Eigendom & zakelijk",a:"",d:"Relatief recht dat alleen tegenover specifieke personen (contractspartijen) geldend kan worden gemaakt.",tip:"Tegenstelling: absoluut recht (werkt jegens iedereen). Huur is persoonlijk.",ex:"Huurrecht is persoonlijk: in principe niet inroepbaar tegenover nieuwe eigenaar."},
+  {t:"Privaatrecht",c:"Overig",a:"",d:"Rechtsregels over de rechten en plichten van rechtssubjecten die op voet van gelijkheid deelnemen aan het maatschappelijk verkeer.",tip:"Tegenstelling: publiekrecht (overheid-burger). Privaatrecht = horizontaal.",ex:"Koop, huur, pacht zijn privaatrecht. Vergunningsverlening en onteigening zijn publiekrecht."},
+  {t:"Rechtsbron",c:"Formeel",a:"",d:"De vindplaats of oorsprong van het recht. Drie erkende bronnen: wet, jurisprudentie en gewoonte.",tip:"In NL geldt de wet als primaire bron. Jurisprudentie (Hoge Raad) en gewoonterecht vullen aan.",ex:"Art. 6:162 BW is een rechtsbron voor aansprakelijkheid."},
+  {t:"Rechtsfeit",c:"Rechtshandeling",a:"",d:"Een feit waaraan het recht gevolgen verbindt.",tip:"Kan door menselijk handelen (rechtshandeling) of zonder (bloot rechtsfeit: geboorte) ontstaan.",ex:"Geboorte = bloot rechtsfeit. Koopovereenkomst = rechtsfeit door rechtshandeling."},
+  {t:"Rechtshandeling",c:"Rechtshandeling",a:"3:33 BW",d:"Een handeling verricht met een op een rechtsgevolg gerichte wil die zich door een verklaring heeft geopenbaard.",tip:"Kern: gewild rechtsgevolg. Vereisten: wil + verklaring die overeenstemmen.",ex:"Koopovereenkomst sluiten, testament opstellen, erfpacht vestigen zijn rechtshandelingen."},
+  {t:"Rechtsobject",c:"Overig",a:"",d:"Het voorwerp van recht — datgene waarover een recht gaat.",tip:"Tegenstelling: rechtssubject (drager van rechten). Rechtsobjecten zijn zaken en vermogensrechten.",ex:"Een perceel grond is het rechtsobject van het eigendomsrecht."},
+  {t:"Rechtspersoon",c:"Personen",a:"2:1 e.v. BW",d:"Een organisatievorm die door de wet eigen rechten en plichten heeft verkregen. Kan zelfstandig aan het rechtsverkeer deelnemen.",tip:"Voorbeelden: BV, NV, vereniging, stichting, gemeente. Kan eigenaar zijn, contracten sluiten.",ex:"Een BV kan zelfstandig grond kopen en pachtovereenkomsten sluiten."},
+  {t:"Rechtssubject",c:"Personen",a:"",d:"De drager van rechten en plichten — degene die aan het rechtsverkeer kan deelnemen.",tip:"Twee typen: natuurlijke personen (mensen) en rechtspersonen. Beide kunnen eigenaar zijn.",ex:"Jij als persoon bent rechtssubject: je kunt eigenaar worden, aansprakelijk zijn."},
+  {t:"Relativiteitsvereiste",c:"Aansprakelijkheid",a:"6:163 BW",d:"De geschonden norm moet strekken tot bescherming tegen de schade zoals de benadeelde die heeft geleden.",tip:"Vijfde vereiste bij OD. Ontbreekt relativiteit → geen aansprakelijkheid.",ex:"Verkeersregel beschermt verkeersdeelnemers. Iemand die thuis van schrik een glas laat vallen: geen relativiteit."},
+  {t:"Revindicatie",c:"Eigendom & zakelijk",a:"5:2 BW",d:"Het terugvorderen van een zaak door de eigenaar op grond van zijn eigendomsrecht.",tip:"Eigenaar kan zaak altijd terugvorderen. Uitzondering: derdenbescherming bij goede trouw.",ex:"Auto gestolen en doorverkocht. Eigenaar vordert terug via revindicatie."},
+  {t:"Risicoaansprakelijkheid",c:"Aansprakelijkheid",a:"6:169 e.v. BW",d:"Aansprakelijkheid op grond van de wet, ongeacht of er sprake is van een verwijtbare gedraging.",tip:"Geen schuld nodig. Tegenstelling: schuldaansprakelijkheid (eigen verwijtbare fout).",ex:"Eigenaar van gevaarlijke stof is risicoaansprakelijk — ook als hij niets verkeerd deed."},
+  {t:"Titel",c:"Goederenrecht",a:"3:84 BW",d:"De juridische grondslag voor de overdracht van een goed — de rechtsreden die de overdracht rechtvaardigt.",tip:"Geen geldige titel → geen geldige overdracht. De koopovereenkomst is de titel.",ex:"Koopovereenkomst = titel. Notariële akte + Kadaster = levering. Beide = overdracht."},
+  {t:"Verkeersopvattingen",c:"Overig",a:"",d:"Opvattingen die bij een meerderheid in de maatschappij leven over wat als normaal of juist geldt.",tip:"Gebruikt bij uitleg van bestanddeel (3:4) en zorgvuldigheid (6:162).",ex:"Verkeersopvatting bepaalt of een ingebouwde keuken bestanddeel is van de woning."},
+  {t:"Vermogensrechten",c:"Goederenrecht",a:"3:6 BW",d:"Op geld waardeerbare rechten en plichten tussen burgers.",tip:"Twee typen: absolute rechten (zakelijke rechten) en persoonlijke rechten (vorderingen).",ex:"Een vordering op je werkgever is een vermogensrecht."},
+  {t:"Vernietigbaarheid",c:"Rechtshandeling",a:"3:49 BW",d:"De rechtshandeling is geldig maar kan met terugwerkende kracht worden aangetast door een beroep van de bevoegde partij.",tip:"Vereist actie van de bevoegde partij. Tot die tijd is de rechtshandeling geldig.",ex:"Overeenkomst door bedrog: geldig totdat de bedrogen partij vernietigt."},
+  {t:"Verzuim",c:"Overeenkomst",a:"6:81 BW",d:"De periode waarin correcte nakoming van een opeisbare prestatie toerekenbaar uitblijft.",tip:"Vereist voor schadevergoeding (tenzij nakoming blijvend onmogelijk). Intreedt na ingebrekestelling.",ex:"Aannemer bouwt niet af na de deadline. Na aanmaning is hij in verzuim."},
+  {t:"Vrijblijvend aanbod",c:"Overeenkomst",a:"",d:"Aanbod dat ook na aanvaarding herroepen kan worden, mits dit onverwijld (direct) geschiedt.",tip:"Uitzondering op de regel dat aanvaard aanbod bindt.",ex:"Autodealer adverteert 'vrijblijvend aanbod'. Koper zegt ja — dealer kan toch nog terug, mits onmiddellijk."},
+  {t:"Vruchtgebruik",c:"Eigendom & zakelijk",a:"3:201 BW",d:"Beperkt recht om goederen die aan een ander toebehoren te gebruiken en daarvan de vruchten te genieten.",tip:"Minder omvattend dan eigendom: vruchtgebruiker mag gebruiken en vruchten trekken, maar niet beschikken.",ex:"Langstlevende echtgenoot krijgt vruchtgebruik: mag van alles genieten maar mag het niet verkopen."},
+  {t:"Wanprestatie",c:"Overeenkomst",a:"6:74 BW",d:"Op toerekenbare wijze tekortkomen in de nakoming van een verbintenis.",tip:"Leidt tot schadevergoedingsplicht. Verschil met overmacht: bij wanprestatie is de tekortkoming toerekenbaar.",ex:"Aannemer levert huis te laat op zonder goede reden: wanprestatie → schadevergoeding."},
+  {t:"Wederkerige overeenkomst",c:"Overeenkomst",a:"6:261 BW",d:"Overeenkomst waarbij beide partijen een verbintenis op zich nemen ter verkrijging van de wederzijdse prestatie.",tip:"Meest voorkomende contractsvorm. Bij tekortkoming van één partij kan de ander zijn prestatie opschorten.",ex:"Koopovereenkomst is wederkerig: jij betaalt, de ander levert."},
+  {t:"Wet (formele zin)",c:"Formeel",a:"81 Gw",d:"Besluit genomen door de regering en de Staten-Generaal gezamenlijk via de procedure van art. 81 Grondwet.",tip:"Onderscheid met wet in materiële zin (AVV). APV is materieel maar geen formele wet.",ex:"De Omgevingswet is een wet in formele zin: tot stand gekomen via Regering + Staten-Generaal."},
+  {t:"Wilsgebreken",c:"Rechtshandeling",a:"3:44 BW",d:"Gebreken in de totstandkoming van de wil: dwaling, bedrog, bedreiging of misbruik van omstandigheden.",tip:"Leiden tot vernietigbaarheid. Vier wilsgebreken: dwaling (6:228), bedrog, bedreiging, misbruik omstandigheden (allen 3:44).",ex:"Verkoper liegt bewust over funderingsproblemen → bedrog → wilsgebrek → koopovereenkomst vernietigbaar."},
+  {t:"Wilsovereenstemming",c:"Rechtshandeling",a:"6:217 BW",d:"Gelijkluidende toestemming van alle betrokken partijen over de inhoud van een overeenkomst.",tip:"Vereist voor totstandkoming overeenkomst. Aanbod + aanvaarding = wilsovereenstemming.",ex:"Verkoper biedt huis aan voor €300.000. Koper aanvaardt. Wilsovereenstemming → overeenkomst."},
+  {t:"Wilsverklaring",c:"Rechtshandeling",a:"3:33 BW",d:"De verklaring waarbij een op rechtsgevolg gerichte wil zich openbaart. Kan mondeling, schriftelijk of door gedrag.",tip:"Twee componenten rechtshandeling: wil (intern) + verklaring (extern). Discrepantie kan leiden tot ongeldigheid.",ex:"Ondertekening koopcontract is een wilsverklaring dat je wilt kopen."},
+  {t:"Zaak",c:"Goederenrecht",a:"3:2 BW",d:"Het voor menselijke beheersing vatbare stoffelijke object.",tip:"Zaken zijn altijd goederen, maar niet andersom. Onderscheid roerend/onroerend belangrijk voor leveringswijze.",ex:"Perceel grond, auto, koe zijn zaken. Bankrekening is goed maar geen zaak."},
+  {t:"Zakelijk recht",c:"Eigendom & zakelijk",a:"",d:"Absoluut recht dat op zaken rust en werkt jegens eenieder.",tip:"Kenmerken: droit de suite (volgt de zaak) en droit de priorité (ouder gaat voor). Limitatief: precies 8.",ex:"Hypotheek is zakelijk recht: blijft op huis rusten ook na verkoop aan nieuwe eigenaar."},
+  {t:"Zekerheidsrecht",c:"Eigendom & zakelijk",a:"",d:"Recht dat ertoe strekt om de voldoening van een schuld te verzekeren.",tip:"Twee vormen: pand (roerende zaken) en hypotheek (registergoederen). Preferente positie bij faillissement.",ex:"Bank neemt hypotheek als zekerheidsrecht: bij wanbetaling verkoopt de bank het huis."}
+];
+
+const ALLCATS1 = ["Alle", ...new Set(TERMS.map(x => x.c))];
+let selCat1 = "Alle";
+const open1 = new Set();
+
+function tog1(term) {
+  open1.has(term) ? open1.delete(term) : open1.add(term);
+  buildBegrippen();
+}
+
+function setcat1(c, el) {
+  selCat1 = c;
+  document.querySelectorAll("#catbar1 .cat-btn").forEach(b => b.classList.remove("on"));
+  el.classList.add("on");
+  buildBegrippen();
+}
+
+function buildBegrippen() {
+  const q = (document.getElementById("sq1").value || "").toLowerCase();
+  const items = TERMS.filter(x => {
+    const mc = selCat1 === "Alle" || x.c === selCat1;
+    const mq = !q || x.t.toLowerCase().includes(q) || x.d.toLowerCase().includes(q) || (x.tip||"").toLowerCase().includes(q);
+    return mc && mq;
+  });
+  document.getElementById("cnt1").textContent = items.length + " begrippen";
+  if (!items.length) {
+    document.getElementById("lst1").innerHTML = `<div class="no-results"><div class="no-results-title">Geen begrippen gevonden</div><p>Probeer een andere zoekterm of categorie.</p></div>`;
+    return;
+  }
+  document.getElementById("lst1").innerHTML = items.map(x => {
+    const cc = CC1[x.c] || {col:"#888",bg:"#f5f5f5",text:"#333"};
+    const isOpen = open1.has(x.t);
+    const termEsc = x.t.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    return `<div class="item${isOpen?" open":""}">
+      <div class="item-hdr" onclick="tog1('${termEsc}')">
+        <div class="dot" style="background:${cc.col}"></div>
+        <div class="item-main">
+          <span class="term">${x.t}</span>
+          ${x.a?`<span class="art">${x.a}</span>`:""}
+        </div>
+        <span class="chev">▼</span>
+      </div>
+      ${isOpen?`<div class="item-body">
+        <div class="def">${x.d}</div>
+        <div class="info-row">
+          <div class="info-box tip-box"><div class="ib-lbl">Geheugensteun</div><div class="ib-txt">${x.tip}</div></div>
+          <div class="info-box ex-box"><div class="ib-lbl">Voorbeeld</div><div class="ib-txt">${x.ex}</div></div>
+        </div>
+        <span class="cat-tag" style="background:${cc.bg};color:${cc.text};border:1px solid ${cc.col}30">${x.c}</span>
+      </div>`:""}
+    </div>`;
+  }).join("");
+}
+
+document.getElementById("catbar1").innerHTML = ALLCATS1.map(c =>
+  `<button class="cat-btn${c==="Alle"?" on":""}" onclick="setcat1('${c}',this)">${c}</button>`
+).join("");
+buildBegrippen();
+
+
+// ══════════════════════════════════════════════════════
+// TAB 2 — OVERIGE KENNIS UIT COLLEGES
+// ══════════════════════════════════════════════════════
+const KENNIS = [
+  {
+    id:"staatsrecht",
+    section:"Staatsrecht & regelgeving",
+    color:"#1a4a8a",
+    cards:[
+      {title:"Democratische rechtsstaat — 4 beginselen",art:"",items:[
+        "Legaliteitsbeginsel: overheidsoptreden dat burgers bindt vereist wettelijke grondslag",
+        "Machtenscheiding (Trias Politica): wetgevende, uitvoerende en rechterlijke macht gescheiden (Montesquieu)",
+        "Onafhankelijke rechter: ieder heeft recht op eerlijk proces (art. 17 Gw)",
+        "Grondrechten: klassiek (overheid onthoudt zich) en sociaal (overheid presteert)"
+      ],def:""},
+      {title:"Hiërarchie van regelgeving",art:"",items:[
+        "Verdrag (hoogste)",
+        "Grondwet",
+        "Wet in formele zin (WIFZ) — art. 81 Gw: Regering + Staten-Generaal",
+        "AMvB — Koninklijk Besluit, geen Staten-Generaal nodig (art. 89 Gw)",
+        "Ministeriële regeling — geen formele procedure, wel grondslag nodig",
+        "Provinciale verordening / APV (laagste)"
+      ],def:"Hogere norm gaat altijd voor lagere."},
+      {title:"WIFZ vs. wimz",art:"art. 81 Gw",items:[
+        "WIFZ (wet in formele zin): onderscheiden naar TOTSTANDKOMING — via Regering + Staten-Generaal",
+        "Wimz (wet in materiële zin): onderscheiden naar INHOUD — avv gericht tot onbepaalde groep voor onbepaalde tijd",
+        "Voorbeeld WIFZ maar geen wimz: begrotingswet",
+        "Voorbeeld wimz maar geen WIFZ: gemeentelijke APV"
+      ],def:""},
+      {title:"Attributie en delegatie",art:"",items:[
+        "Attributie: nieuwe bevoegdheid wordt gecreëerd en toegekend aan een orgaan als eigen bevoegdheid",
+        "Delegatie: bestaande eigen bevoegdheid overdragen aan een ander orgaan",
+        "Mandaat: uitoefening bevoegdheid door een ander namens het bevoegde orgaan (geen overdracht)"
+      ],def:""},
+      {title:"Staten-Generaal",art:"art. 50-55 Gw",items:[
+        "Tweede Kamer: 150 leden, direct gekozen door kiezers ≥18 jaar, 4 jaar",
+        "Eerste Kamer: 75 leden, getrapt gekozen via Provinciale Staten, 4 jaar",
+        "Beide kamers controleren de regering via inlichtingenrecht (art. 68 Gw)",
+        "Vertrouwensregel: ongeschreven staatsrecht — kabinet moet vertrouwen van Tweede Kamer behouden"
+      ],def:""},
+      {title:"Decentralisatie",art:"art. 124 Gw",items:[
+        "Autonomie (art. 124 lid 1): decentrale overheid regelt eigen huishouding zelfstandig",
+        "Medebewind (art. 124 lid 2): decentrale overheid wordt gevorderd rijksbeleid uit te voeren",
+        "Toezicht preventief (art. 132 lid 3): goedkeuring vooraf — geen generieke bevoegdheid",
+        "Toezicht repressief (art. 132 lid 4): vernietiging achteraf bij KB — wél generieke bevoegdheid",
+        "Nederland = gedecentraliseerde eenheidsstaat: 12 provincies, 342 gemeenten, 21 waterschappen"
+      ],def:""},
+      {title:"Gemeente — organen en bevoegdheden",art:"Gemeentewet",items:[
+        "Gemeenteraad: hoofd van de gemeente (art. 125 Gw), stelt APV vast, controleert B&W",
+        "College B&W: dagelijks bestuur, medebewindstaken, collegiaal bestuur",
+        "Burgemeester: benoemd bij KB (art. 131 Gw), voorzitter raad en college",
+        "Verordeningsbevoegdheid: ondergrens (Wilnisser Visser) en bovengrens (Emmense Baliekluivers)"
+      ],def:""},
+      {title:"Grondrechten",art:"Grondwet",items:[
+        "Klassieke grondrechten: overheid onthoudt zich — vrijheid van meningsuiting (art. 7), vrijheid van godsdienst (art. 6), lichamelijke integriteit (art. 11)",
+        "Sociale grondrechten: overheid heeft inspanningsverplichting — recht op onderwijs, werk, gezondheidszorg",
+        "Horizontale werking: grondrechten ook tussen burgers onderling",
+        "Beperking grondrechten: vereist competentie, doel en naleving procedurevoorschriften"
+      ],def:""}
+    ]
+  },
+  {
+    id:"bestuursrecht",
+    section:"Bestuursrecht & Awb",
+    color:"#3a5a6a",
+    cards:[
+      {title:"Bestuursorgaan (art. 1:1 Awb)",art:"art. 1:1 Awb",items:[
+        "A-orgaan: orgaan van rechtspersoon die krachtens publiekrecht is ingesteld (bijv. gemeenteraad, GS, minister) — volledig onder Awb",
+        "B-orgaan: ander persoon of college met openbaar gezag — alleen onder Awb voor zover openbaar gezag uitgeoefend",
+        "Waterschap, zorgkantoor, keuringsinstelling kunnen B-orgaan zijn"
+      ],def:""},
+      {title:"Besluit — 5 elementen (art. 1:3 Awb)",art:"art. 1:3 Awb",items:[
+        "1. Schriftelijk — niet mondeling",
+        "2. Beslissing — resultaat van rationeel afwegingsproces",
+        "3. Van een bestuursorgaan — a- of b-orgaan",
+        "4. Publiekrechtelijk — bevoegdheid in de wet",
+        "5. Rechtshandeling — gericht op rechtsgevolg"
+      ],def:"Informatieve brief van gemeente = GEEN besluit (geen rechtsgevolg beoogd)."},
+      {title:"Soorten besluiten",art:"",items:[
+        "Beschikking (1:3 lid 2): besluit niet van algemene strekking — concreet/individueel geval — vatbaar voor bezwaar/beroep",
+        "AVV (materiële wetgeving): onbepaalde groep, onbepaalde tijd — bijv. APV, AMvB",
+        "Beleidsregel (1:3 lid 4): pseudowetgeving, geen avv — bestuursorgaan bindt zichzelf",
+        "Plan: strategische besluiten gericht op de toekomst (bijv. omgevingsplan)"
+      ],def:""},
+      {title:"Belanghebbende — OPERA (art. 1:2 Awb)",art:"art. 1:2 Awb",items:[
+        "O — Objectief bepaalbaar belang (niet puur subjectief gevoel)",
+        "P — Persoonlijk belang (nabijheidscriterium — onderscheidbaar van amorfe massa)",
+        "E — Eigen belang (niet opkomen voor andermans belang)",
+        "R — Rechtstreeks belang (causaal verband besluit en geraakt belang)",
+        "A — Actueel belang (toekomstig onzeker belang volstaat niet)"
+      ],def:"Alle vijf cumulatief vereist. Directe buren zijn bij ruimtelijke besluiten altijd belanghebbend."},
+      {title:"Gelede normstelling",art:"",items:[
+        "Normen voor een concreet geval worden bepaald door hiërarchisch geordende regelingen tegelijk",
+        "Voorbeeld: omgevingsvergunning — Omgevingswet → Bkl → omgevingsplan → beschikking",
+        "Bijzonder gaat voor algemeen: Awb is algemeen recht, bijzondere wetten (Omgevingswet, Wabo) gaan voor"
+      ],def:""}
+    ]
+  },
+  {
+    id:"pacht",
+    section:"Pachtrecht",
+    color:"#2d5a27",
+    cards:[
+      {title:"Definitie en pachtvormen",art:"BW 7:311 e.v.",items:[
+        "Pacht: in gebruik geven onroerende zaak voor landbouw tegen tegenprestatie",
+        "Reguliere pacht: alle objecten, 12j (hoeve)/6j (los land), grondkamer keurt goed, dwingend recht",
+        "Geliberaliseerde pacht: alleen los land — ≤6 jaar vrije prijs, >6 jaar prijstoets",
+        "Teeltpacht (7:396): vruchtwisseling (suikerbieten, aardappelen, bloembollen), max. 2 jaar, vrije prijs",
+        "Reservaatpacht/natuurpacht (7:388): natuur- en landschapsverplichtingen, lagere prijs mogelijk",
+        "Grijze pacht: buiten wet om, geen grondkamer, ~25% van pachtareaal, risico: claim reguliere pacht"
+      ],def:""},
+      {title:"Dwingend recht reguliere pacht",art:"",items:[
+        "Continuatierecht: automatische verlenging met 6 jaar",
+        "Indeplaatsstelling: opvolging door partner of (pleeg)kind werkzaam in landbouw",
+        "Medepacht: zelfde rechten als pachter (bijv. via maatschap)",
+        "Voorkeursrecht: pachter koopt als eerste, tenzij veilige verpachter. Binnen 10 jaar na koop: vergoedingsrecht extra opbrengst",
+        "Melioratierecht: vergoeding aangebrachte verbeteringen bij einde pacht"
+      ],def:""},
+      {title:"Pachtprijssystematiek",art:"Pachtnormenbesluit 2007",items:[
+        "Na 1 sept. 2007: max. = laagste van regionorm of 2% vrije verkeerswaarde",
+        "Vóór 1 sept. 2007: 4 rekenregels — (1) veranderpercentage, (2) max. 110% regionorm, (3) min. 90% regionorm, (4) max. 2% VVW",
+        "Regionorm: berekend per regio o.b.v. opbrengend vermogen grond afgelopen 5 jaar",
+        "14 regio's voor GBF (grasland/bouwland/fruitteelt), 2 regio's voor tuinland",
+        "Jaarlijks herzien per 1 juli door ministerie LNV",
+        "Doorberekening mogelijk: max. 50% waterschapslasten + 50% landinrichtingsrente"
+      ],def:""},
+      {title:"Grondkamer en pachtkamer",art:"",items:[
+        "Grondkamer: goedkeuring pachtovereenkomsten, toetst prijs en landbouwbelang, herziening pachtprijzen op verzoek",
+        "Pachtkamer: onderdeel kantongerecht, juridische geschillen over pacht",
+        "Geliberaliseerde pacht ≤6 jaar: digitaal indienen, alleen registratie (geen prijstoets)",
+        "Geliberaliseerde pacht >6 jaar: grondkamer toetst prijs"
+      ],def:""},
+      {title:"Nieuwe pachtvormen (voorstel 2026)",art:"",items:[
+        "Standaardpacht: 24 jaar, prijstaxatie bij start daarna indexatie, geen standaard opvolging",
+        "Continuatiepacht: opvolger reguliere pacht, opvolging verzekerd, pachtprijs via indexatie",
+        "Kortlopende pacht: max. 12 jaar, vrije prijs, ruimte voor duurzaamheidsafspraken",
+        "Teeltpacht blijft: max. 1-2 jaar, vruchtwisseling",
+        "Natuurpacht blijft: min. 6 jaar, specifiek voor natuurgronden"
+      ],def:"Voorstel lag ter inzage december 2025 – februari 2026."},
+      {title:"Pachtafkoop bij onteigening",art:"",items:[
+        "Pachtafkoop valt onder inkomensschade bij volledige schadeloosstelling",
+        "Kapitalisatiefactor: eigenaar 10, erfpachter 9, pachter 8",
+        "Looptijd resterende pacht is bepalend voor de hoogte van de afkoop"
+      ],def:""}
+    ]
+  },
+  {
+    id:"erfpacht-huur",
+    section:"Erfpacht & Huur",
+    color:"#5a3a9e",
+    cards:[
+      {title:"Erfpacht vs. huur — kern verschil",art:"",items:[
+        "Erfpacht = zakelijk recht: verkoopbaar, vererfbaar, overdraagbaar, werkt jegens eenieder",
+        "Huur = persoonlijk recht: werkt alleen tussen verhuurder en huurder",
+        "Erfpacht voor landbouw: minimaal 26 jaar (anders omzeiling pachtregels)",
+        "Canon: waarde onroerende zaak × kapitaalrente (langjarig percentage); herzienbaar en indexeerbaar"
+      ],def:""},
+      {title:"Opstalrecht",art:"5:101 BW",items:[
+        "Recht om een gebouw of werk op andermans grond in eigendom te hebben",
+        "Zonder opstalrecht: opstal wordt eigendom van grondeigenaar door natrekking",
+        "Erfpachtafhankelijk opstalrecht: erfpacht op ondergrond + opstalrecht voor bebouwing",
+        "Bij afloop erfpacht: opstal kan worden verkocht aan grondeigenaar"
+      ],def:""},
+      {title:"Huurregimes woonruimte",art:"BW 7:233 e.v.",items:[
+        "Sterkste huurbescherming van alle huurvormen",
+        "Opzegging alleen op limitatieve wettelijke gronden: niet-goed huurdersgedrag, dringend eigen gebruik, weigering redelijk aanbod, bestemmingsplan, einde tijdelijk contract",
+        "Sociale sector: puntensysteem — 143 punten → max. €900,07/mnd (2025)",
+        "Jaarlijkse verhogingspercentage: max. 5% (2025), gebaseerd op inflatie",
+        "Wet betaalbare huur (juli 2024): ook middensegment deels gereguleerd"
+      ],def:""},
+      {title:"Huurregimes bedrijfsruimte",art:"BW 7:290 en 7:230a",items:[
+        "290-bedrijfsruimte (detailhandel, horeca, ambacht): min. 5+5=10 jaar van rechtswege verlengd",
+        "Opzegging vóór 10 jaar: slechte bedrijfsvoering of dringend eigen gebruik",
+        "Huurprijswijziging 290: afdwingbaar elke 5 jaar via rechter (taxatie vergelijkbare objecten)",
+        "230a-bedrijfsruimte (kantoren, fabrieken, scholen): meer contractsvrijheid, minder dwingend recht",
+        "ROZ-contracten (Raad voor Onroerende Zaken): standaardcontracten voor zakelijke huur"
+      ],def:""},
+      {title:"Tijdelijke verhuur",art:"Leegstandwet",items:[
+        "Tijdelijke verhuur via Leegstandwet: vereist vergunning, zekerheid dat huurder vertrekt",
+        "Verhuur aan expats: max. 2 jaar (doelgroepencontract)",
+        "Via organisaties als Camelot of Interim Vastgoed: beheer leegstaand vastgoed",
+        "Huurprijs ligt lager dan bij reguliere verhuur"
+      ],def:""}
+    ]
+  },
+  {
+    id:"grondinstrumenten",
+    section:"Grondinstrumenten & Omgevingswet",
+    color:"#9a6e10",
+    cards:[
+      {title:"Grondbeleid — actief vs. faciliterend",art:"",items:[
+        "Actief grondbeleid: overheid verwerft, exploiteert en verkoopt grond zelf (primair bij grijze doelen: wegen, vaarwegen)",
+        "Faciliterend/passief: overheid stelt publiekrechtelijke regels, private partijen realiseren zelf (bij groene doelen: NNN, Natura 2000)",
+        "Samenwerkingsverbanden: PPS-constructies (bijv. Nationaal Militair Museum Soesterberg)",
+        "Provinciaal grondbeleid: 4 basisprincipes — middel voor beleid, marktconform, niet marktverstoend, waardebehoud"
+      ],def:""},
+      {title:"Onteigening",art:"art. 14 Gw, Ow H11",items:[
+        "Gedwongen ontneming van eigendom — alleen onroerende zaken",
+        "Drie vereisten (art. 14 Gw): algemeen belang + wettelijke procedure + vooraf verzekerde volledige schadeloosstelling",
+        "Noodzaaktoets: noodzaak, urgentie, minnelijke verwerving geprobeerd, zelfrealisatie uitgesloten",
+        "Zelfrealisatie: eigenaar die bestemming zelf kan realiseren blokkeert onteigening",
+        "Onteigeningsbeschikking bekrachtigd door rechter"
+      ],def:"Onteigening is altijd een ultimum remedium."},
+      {title:"Volledige schadeloosstelling",art:"",items:[
+        "Vermogensschade: waarde onroerende zaak + waardevermindering overblijvende",
+        "Inkomensschade: bedrijfsschade, pachtafkoop. Kapitalisatiefactor: eigenaar 10, erfpachter 9, pachter 8",
+        "Bijkomende schade: verhuis- en aanpassingskosten",
+        "Reconstructie vs. liquidatie: bepalend voor berekeningswijze bedrijfsschade"
+      ],def:""},
+      {title:"Voorkeursrecht (Ow H9)",art:"",items:[
+        "Eigenaar moet grond bij verkoop eerst aanbieden aan overheid — geen koopplicht voor overheid",
+        "Geldt voor niet-agrarische functie die afwijkt van huidig gebruik",
+        "Gevestigd door: gemeente, Provinciale Staten of Minister van BZK (waterschap NIET)",
+        "Uitzonderingen aanbiedingsplicht: familie, bestaande gemeenschappelijke eigenaren, testament, aankoop door overheid zelf",
+        "Ingeschreven in Kadaster — handelen in strijd = nietige rechtshandeling",
+        "Overheid heeft 3 jaar om te kopen na afwijzing; daarna mag eigenaar vrij verkopen"
+      ],def:""},
+      {title:"Kostenverhaal & financiële bijdrage (Ow)",art:"",items:[
+        "PPT-criteria: Profijt + Proportionaliteit + Toerekenbaarheid",
+        "Anterieure overeenkomst: vrijwillige afspraak vóór omgevingsplan — meest gebruikt in praktijk",
+        "Publiekrechtelijk kostenverhaal: limitatieve kostensoortenlijst in Omgevingsbesluit",
+        "Afdwingbare financiële bijdrage: nieuw instrument voor kwaliteitsverbetering landschap, natuur, water",
+        "Overheid mag niet meer kosten verhalen dan er opbrengsten zijn"
+      ],def:""},
+      {title:"Nadeelcompensatie & gedoogplicht",art:"",items:[
+        "Nadeelcompensatie: vergoeding schade door rechtmatig overheidsoptreden",
+        "Vereisten: schade overstijgt normaal maatschappelijk risico + aanvrager onevenredig getroffen t.o.v. anderen",
+        "Forfait indirecte schade: eerste 4% waardedaling onroerend goed wordt niet vergoed",
+        "Gedoogplicht van rechtswege (afd. 10.2 Ow): eigenaar melden 48 uur van tevoren",
+        "Gedoogplicht bij beschikking (afd. 10.3 Ow): voor werken van algemeen belang (gas, elektra, riool)"
+      ],def:""}
+    ]
+  },
+  {
+    id:"landinrichting",
+    section:"Landinrichting & Kavelruil",
+    color:"#1d7a5a",
+    cards:[
+      {title:"Twee hoofdvormen landinrichting",art:"Ow afd. 12.4 en art. 12.44",items:[
+        "Kavelruil (art. 12.44 Ow): vrijwillig, min. 3 eigenaren, notariële akte + Kadaster-inschrijving",
+        "Wettelijke herverkaveling (afd. 12.4 Ow): afdwingbaar, besluitvorming overheid, kan ook tegen wil eigenaar",
+        "Didam-arrest: bij kavelruil gelden criteria Didam vanwege vrijwillig karakter; bij herverkaveling niet"
+      ],def:""},
+      {title:"Kavelruil — vormen en financiering",art:"",items:[
+        "Enkelvoudige doelen (bijv. alleen agrarische structuurverbetering) of meervoudige doelen",
+        "Subsidie via provincie of GLB-NSP 2023-2027 (co-financiering vereist)",
+        "Notariskosten en kadasterkosten via subsidie verrekend",
+        "Stedelijke kavelruil: instrument voor inrichting woon- en werkomgeving in stad"
+      ],def:""},
+      {title:"Herverkaveling — stappen in het proces",art:"",items:[
+        "1. Opdracht verstrekken + werkzaamheden uitvoeren",
+        "2. Opstellen ruilbesluit: lijst rechthebbenden, registratie pacht, kortingspercentage, bodemkaarten, toewijzing percelen",
+        "3. Vaststellen ruilbesluit",
+        "4. Passeren herverkavelingsakte",
+        "5. Besluit geldelijke regelingen + terinzagelegging + vaststellen correctiefactor"
+      ],def:"Doorlooptijd afhankelijk van: complexiteit, draagvlak, gebiedsomvang, aantal eigenaren."},
+      {title:"Inrichtingsprogramma en inrichtingsbesluit",art:"Ow",items:[
+        "Inrichtingsprogramma: kerninstrument Ow — uitwerking beleid voor ontwikkeling/gebruik/beheer fysieke leefomgeving, inclusief financieringsafspraken",
+        "Inrichtingsbesluit: bindt burgers en bedrijven — toedeling eigendom wegen, beheer openbare wegen, landschapselementen"
+      ],def:""}
+    ]
+  },
+  {
+    id:"natuurbescherming",
+    section:"Natuurbescherming (Omgevingswet)",
+    color:"#c04a1a",
+    cards:[
+      {title:"Toetsingsschema Natura 2000",art:"Ow, Bal, Bkl",items:[
+        "Stap 1 — Voortoets: globale effectenanalyse zonder mitigatie, wél cumulatietoets verplicht",
+        "Conclusie: kans op significant gevolg? → Natura 2000-activiteit → vergunningplicht (art. 5.1 lid 1 Ow)",
+        "Stap 2 — Passende beoordeling: mitigatie mag, op basis van beste wetenschappelijke kennis (art. 16.53c Ow, 8.74b Bkl)",
+        "Stap 3 — ADC-toets: geen Alternatieven + Dwingende redenen groot openbaar belang + tijdige Compenserende maatregelen",
+        "HvJEU People Over Wind (C-323/17, 2018): mitigatie VERBODEN in voortoets"
+      ],def:""},
+      {title:"Natura 2000-activiteit & zorgplicht",art:"art. 5.1 Ow, 11.6 Bal",items:[
+        "Natura 2000-activiteit: project zonder direct verband met beheer N2000, maar met mogelijke significante gevolgen",
+        "Bevoegd gezag: provincie (GS) of Minister LNV bij nationaal belang",
+        "Vergunningsvrije gevallen: tijdelijke activiteiten (stikstofdepositie bij bouw/sloop, art. 11.17 Bal), in programma/verordening aangewezen activiteiten",
+        "Specifieke zorgplicht (art. 11.6 Bal): geldt ALTIJD — ook zonder vergunningplicht. Nadelige gevolgen voorkomen, beperken of ongedaan maken"
+      ],def:""},
+      {title:"Soortenbescherming — flora- en fauna-activiteit",art:"Bal afd. 11.2",items:[
+        "Flora- en fauna-activiteit: elke activiteit met mogelijke gevolgen voor wilde dieren of planten",
+        "Vergunningplichtig alleen bij schadelijke handelingen op beschermde soorten",
+        "Drie beschermingsregimes: Vogelrichtlijn (§11.2.2 Bal), Habitatrichtlijn (§11.2.3 Bal), nationale soorten (§11.2.4 Bal)",
+        "Schadelijke handelingen: doden/vangen, beschadigen nesten/rustplaatsen, plukken/vernielen planten",
+        "Specifieke zorgplicht soorten (art. 11.27 Bal): geldt voor alle flora- en fauna-activiteiten, ook niet-beschermde soorten"
+      ],def:""},
+      {title:"Houtopstanden",art:"afd. 11.3 Bal",items:[
+        "Meldplicht (art. 11.126 Bal): min. 4 weken tot max. 1 jaar vóór velling melden",
+        "Geldt voor: houtopstanden ≥10 are of bomenrijen >20 bomen, buiten bebouwingscontour houtkap",
+        "Herplantplicht (art. 11.129 Bal): herbeplanting op bosbouwkundige wijze binnen 3 jaar, dezelfde grond",
+        "Uitzonderingen: tuinen/erven, kerstbomen <20 jaar, kweekgoed, dunningen, fruitbomen, windschermen",
+        "GS kan kapverbod opleggen via maatwerkvoorschrift (max. 5 jaar) voor bijzondere natuur-/landschapswaarden"
+      ],def:""},
+      {title:"Significantie en cumulatietoets",art:"",items:[
+        "Significant gevolg: instandhoudingsdoelstelling van N2000 gebied komt in gevaar",
+        "Minimumareaal habitattype: in de meeste gevallen 1 are (Profielendocument LNV)",
+        "Cumulatietoets: verplicht in voortoets én passende beoordeling — alleen concrete plannen/projecten meenemen",
+        "Mitigatie in passende beoordeling: tijdsschema, aard werkzaamheden, afbakening gebieden, alternatieve bouwtechnieken, afscherming geluid/licht"
+      ],def:""}
+    ]
+  }
+];
+
+const openK = new Set();
+
+function togK(id) {
+  openK.has(id) ? openK.delete(id) : openK.add(id);
+  buildKennis();
+}
+
+function buildKennis() {
+  const q = (document.getElementById("sq2").value || "").toLowerCase();
+  let totalCards = 0;
+  let html = "";
+
+  KENNIS.forEach(section => {
+    const filteredCards = section.cards.filter(card => {
+      if (!q) return true;
+      return card.title.toLowerCase().includes(q) ||
+        card.items.some(i => i.toLowerCase().includes(q)) ||
+        (card.def||"").toLowerCase().includes(q);
+    });
+    if (!filteredCards.length) return;
+    totalCards += filteredCards.length;
+
+    html += `<div class="k-section">
+      <div class="k-section-title" style="border-bottom-color:${section.color}20">${section.section}</div>
+      <div class="k-grid">
+        ${filteredCards.map((card, ci) => {
+          const cardId = section.id + "-" + ci;
+          const isOpen = openK.has(cardId);
+          return `<div class="k-card${isOpen?" open":""}">
+            <div class="k-card-hdr" onclick="togK('${cardId}')">
+              <div class="dot" style="background:${section.color};width:8px;height:8px;border-radius:50%;flex-shrink:0"></div>
+              <div style="flex:1;min-width:0">
+                <div class="k-card-title">${card.title}</div>
+                ${card.art?`<div class="k-card-sub">${card.art}</div>`:""}
+              </div>
+              <span class="k-card-chev">▼</span>
+            </div>
+            ${isOpen?`<div class="k-card-body">
+              <div class="k-items">
+                ${card.items.map(item => `<div class="k-item"><div class="k-bullet" style="background:${section.color}"></div><span>${item}</span></div>`).join("")}
+              </div>
+              ${card.def?`<div class="k-def">${card.def}</div>`:""}
+            </div>`:""}
+          </div>`;
+        }).join("")}
+      </div>
+    </div>`;
+  });
+
+  document.getElementById("cnt2").textContent = totalCards + " kenniskaarten";
+  document.getElementById("klst").innerHTML = html || `<div class="no-results"><div class="no-results-title">Geen resultaten gevonden</div><p>Probeer een andere zoekterm.</p></div>`;
+}
+
+buildKennis();
+
+// scroll to top
+window.addEventListener("scroll", () => {
+  document.getElementById("totop").classList.toggle("vis", window.scrollY > 300);
+});
+</script>
+</body>
+</html>
